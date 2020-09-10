@@ -52,7 +52,7 @@ public class DeliveryService {
         // Database connection data
         String url = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
         String username = "root";
-        String password = "fenster1w2k";
+        String password = "password";
 
         // Connect to database
         try {
