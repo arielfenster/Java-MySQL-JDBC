@@ -13,8 +13,8 @@ Create a console application for managing delivery service.
    3. View active deliveries
 3. When user chooses option 1, a series of questions are presented to him
    1. Enter recipient name - make sure the name contains at least 3 characters [x]
-   2. Enter delivery address - make sure address contains at least 2 words [ ]
-   3. Enter delivery hour - validate time format (hh:mm), make sure time is the future [ ]
+   2. Enter delivery address - make sure address contains at least 2 words [x]
+   3. Enter delivery hour - validate time format (hh:mm), make sure time is the future [x]
    4. Insert a new row to the table and preset the main options again [ ]
 4. When user chooses option 2 - 
    1. Present all future deliveries in the system and ask the user to click the id of the row he wants to edit [ ]
@@ -27,13 +27,13 @@ Create a console application for managing delivery service.
 
 
 Requirements[a] :
-* The data column should contain a json string with following fields [ ]
+* The data column should contain a json string with following fields [x]
 {
     name: “”,
     address: “”,
     date: “”
 }
-* Create an object named DeliveryModel contains the json elements [ ]
+* Create an object named DeliveryModel contains the json elements [x]
 * When insert data into db is required - 
 	implement a function that receives the DeliveryModel and inserts it into the db as string. [ ]
 * When update data in the db is required - 

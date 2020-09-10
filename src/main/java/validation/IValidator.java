@@ -6,5 +6,5 @@ public interface IValidator {
 
     void validateAddress(String address);
 
-    void validateHours(String hours);
+    void validateDate(String date);
 }

@@ -1,4 +1,5 @@
 import db.DBManager;
+import db.DeliveryModel;
 import validation.IValidator;
 import validation.MyValidator;
 
@@ -24,13 +25,14 @@ public class DeliveryService {
 
         System.out.println("Enter delivery address");
         String address = scanner.nextLine();
-        validator.validateName(address);
+        validator.validateAddress(address);
 
         System.out.println("Enter delivery hour");
         String hour = scanner.nextLine();
-        validator.validateName(hour);
+        validator.validateDate(hour);
 
-
+        DeliveryModel deliveryModel = new DeliveryModel(name, address, hour);
+        dbManager.insert(deliveryModel);
     }
 
     private void updateDelivery() {
@@ -52,14 +54,10 @@ public class DeliveryService {
         // Database connection data
         String url = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
         String username = "root";
-        String password = "fenster1w2k";
+        String password = "password";
 
         // Connect to database
-        try {
-            dbManager.connect(url, username, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        dbManager.connect(url, username, password);
 
         while (true) {
             displayOptions();

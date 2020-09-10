@@ -1,6 +1,13 @@
 package validation;
 
 
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MyValidator implements IValidator {
 
     @Override
@@ -18,7 +25,22 @@ public class MyValidator implements IValidator {
     }
 
     @Override
-    public void validateHours(String hours) {
-//        return false;
+    public void validateDate(String date) {
+        // Check the input's format
+        Pattern pattern = Pattern.compile("\\d\\d:\\d\\d");
+        Matcher matcher = pattern.matcher(date);
+
+        if (!matcher.find()) {
+            throw new RuntimeException("Date input needs to be in HH:mm format");
+        }
+
+        // Check that the input is in the future
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime inputTime = LocalTime.parse(date, format);
+        LocalTime currentTime = LocalTime.now();
+
+        if (inputTime.isBefore(currentTime)) {
+            throw new RuntimeException("Delivery time must be in the future");
+        }
     }
 }
