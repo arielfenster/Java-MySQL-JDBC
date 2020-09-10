@@ -15,15 +15,15 @@ Create a console application for managing delivery service.
    1. Enter recipient name - make sure the name contains at least 3 characters [x]
    2. Enter delivery address - make sure address contains at least 2 words [x]
    3. Enter delivery hour - validate time format (hh:mm), make sure time is the future [x]
-   4. Insert a new row to the table and preset the main options again [ ]
+   4. Insert a new row to the table and preset the main options again [x]
 4. When user chooses option 2 - 
    1. Present all future deliveries in the system and ask the user to click the id of the row he wants to edit [ ]
    2. For each field show the current value with an option to click enter to keep the old value or enter a new value, for example, Enter recipient name (OLD_VALUE): [ ]
    3. If anything changed, update the row in DB [ ]
    4. Show the main options again [ ]
 5. When user chooses option 3 -
-   1. Show all future deliveries with a message at the end - “Click enter to continue” [ ]
-   2. When clicking enter - show the main options again [ ]
+   1. Show all future deliveries with a message at the end - “Click enter to continue” [x]
+   2. When clicking enter - show the main options again [x]
 
 
 Requirements[a] :
@@ -35,9 +35,9 @@ Requirements[a] :
 }
 * Create an object named DeliveryModel contains the json elements [x]
 * When insert data into db is required - 
-	implement a function that receives the DeliveryModel and inserts it into the db as string. [ ]
+	implement a function that receives the DeliveryModel and inserts it into the db as string. [x]
 * When update data in the db is required - 
-	Implement a function that gets the value from the data column and translates it into the DeliveryModel [ ]
+	Implement a function that gets the value from the data column and translates it into the DeliveryModel [x]
 
 ** mysql user: root password:scan2018 [ ]
 

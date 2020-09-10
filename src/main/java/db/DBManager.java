@@ -1,9 +1,11 @@
 package db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import utils.Helper;
+
+import java.sql.*;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBManager {
 
@@ -15,17 +17,6 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        /*
-        Statement statement = this.connection.createStatement();
-        String query = "select * from deliveries";
-
-        ResultSet rs = statement.executeQuery(query);
-
-        while (rs.next()) {
-            String id = rs.getString("id");
-            String data = rs.getString("data");
-            System.out.println(id + " " + data);
-         */
     }
 
     public void insert(DeliveryModel deliveryModel) {
@@ -36,5 +27,33 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<String> getAllActiveDeliveries() {
+        List<String> activeDeliveries = new ArrayList<>();
+
+        try {
+            // Extract all the deliveries from the db
+            Statement statement = this.connection.createStatement();
+            String query = "SELECT data from deliveries";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            LocalTime currentTime = LocalTime.now();
+
+            while (resultSet.next()) {
+                // Create a delivery model object based on the data value in the db
+                String delivery = resultSet.getString(1);
+                DeliveryModel deliveryModel = new DeliveryModel(delivery);
+
+                // Check if the delivery's time value is after the current time. If yes then add it to the list
+                LocalTime deliveryTime = Helper.convertStringToTimeWithDefaultFormat(deliveryModel.getDate());
+                if (deliveryTime.isAfter(currentTime)) {
+                    activeDeliveries.add(delivery);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return activeDeliveries;
     }
 }

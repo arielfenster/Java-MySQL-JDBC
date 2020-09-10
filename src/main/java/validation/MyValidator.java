@@ -1,10 +1,9 @@
 package validation;
 
 
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+import utils.Helper;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,8 +34,7 @@ public class MyValidator implements IValidator {
         }
 
         // Check that the input is in the future
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime inputTime = LocalTime.parse(date, format);
+        LocalTime inputTime = Helper.convertStringToTimeWithDefaultFormat(date);
         LocalTime currentTime = LocalTime.now();
 
         if (inputTime.isBefore(currentTime)) {

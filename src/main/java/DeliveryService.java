@@ -3,7 +3,7 @@ import db.DeliveryModel;
 import validation.IValidator;
 import validation.MyValidator;
 
-import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class DeliveryService {
@@ -40,7 +40,13 @@ public class DeliveryService {
     }
 
     private void viewActiveDeliveries() {
+        List<String> activeDeliveries = dbManager.getAllActiveDeliveries();
 
+        for (String str : activeDeliveries) {
+            System.out.println(str);
+        }
+        System.out.println("Click enter to continue");
+        scanner.nextLine();
     }
 
     private void displayOptions() {
@@ -54,7 +60,7 @@ public class DeliveryService {
         // Database connection data
         String url = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
         String username = "root";
-        String password = "password";
+        String password = "password"; // TODO: change this before every time you commit
 
         // Connect to database
         dbManager.connect(url, username, password);
@@ -76,7 +82,8 @@ public class DeliveryService {
                     viewActiveDeliveries();
                     break;
                 }
-                default: return;
+                default:
+                    return;
             }
         }
     }
