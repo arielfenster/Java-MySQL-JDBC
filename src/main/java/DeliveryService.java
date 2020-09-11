@@ -105,7 +105,7 @@ public class DeliveryService {
         // Database connection data
         String url = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
         String username = "root";
-        String password = "fenster1w2k"; // TODO: change this before every time you commit
+        String password = "password"; // TODO: change this before every time you commit
 
         // Connect to database
         dbManager.connect(url, username, password);
