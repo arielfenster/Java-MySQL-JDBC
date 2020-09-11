@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8aa57dbb-f7d7-4eef-906a-7467c7e74087" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DeliveryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DeliveryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/DBManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/DBManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/DeliveryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/DeliveryModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/TimeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/TimeConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validation/IValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/validation/IValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validation/MyValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/validation/MyValidator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,22 +147,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1599756084605" />
-    <state width="1493" height="240" key="GridCell.Tab.0.bottom" timestamp="1599830983092">
+    <state width="1493" height="240" key="GridCell.Tab.0.bottom" timestamp="1599831142046">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="240" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1599830983092" />
-    <state width="1493" height="240" key="GridCell.Tab.0.center" timestamp="1599830983092">
+    <state width="1493" height="240" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1599831142046" />
+    <state width="1493" height="240" key="GridCell.Tab.0.center" timestamp="1599831142046">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="240" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1599830983092" />
-    <state width="1493" height="240" key="GridCell.Tab.0.left" timestamp="1599830983092">
+    <state width="1493" height="240" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1599831142046" />
+    <state width="1493" height="240" key="GridCell.Tab.0.left" timestamp="1599831142046">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="240" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1599830983092" />
-    <state width="1493" height="240" key="GridCell.Tab.0.right" timestamp="1599830983092">
+    <state width="1493" height="240" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1599831142046" />
+    <state width="1493" height="240" key="GridCell.Tab.0.right" timestamp="1599831142046">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="240" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1599830983092" />
+    <state width="1493" height="240" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1599831142046" />
     <state width="1493" height="254" key="GridCell.Tab.1.bottom" timestamp="1599829249909">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -196,6 +191,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="498" y="305" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.824@0.0.1536.824" timestamp="1599755697334" />
+    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599831353526">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1599831353526" />
     <state x="463" y="149" width="609" height="526" key="find.popup" timestamp="1599809034859">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
