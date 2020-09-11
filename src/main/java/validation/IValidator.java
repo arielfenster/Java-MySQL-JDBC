@@ -1,10 +1,12 @@
 package validation;
 
+import javax.xml.bind.ValidationException;
+
 public interface IValidator {
 
-    void validateName(String name);
+    void validateName(String name) throws ValidationException;
 
-    void validateAddress(String address);
+    void validateAddress(String address) throws ValidationException;
 
-    void validateDate(String date);
+    void validateDate(String date) throws ValidationException;
 }

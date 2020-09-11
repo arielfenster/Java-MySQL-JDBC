@@ -4,9 +4,7 @@ import utils.TimeConverter;
 
 import java.sql.*;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DBManager {
 
@@ -27,14 +25,17 @@ public class DBManager {
 
     public void insert(DeliveryModel deliveryModel) {
         try {
-            // Create the query and execute it
-            Statement statement = this.connection.createStatement();
+            // Create the query and execute it (and get the auto-generated id from the db)
+            Statement statement = connection.createStatement();
             String query = String.format("INSERT INTO deliveries(data) values('%s')", deliveryModel.toString());
-            statement.executeUpdate(query);
+            statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 
             // Add the delivery to the map
-            int id = statement.getGeneratedKeys().getInt("id");
-            deliveries.put(id, deliveryModel);
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                deliveries.put(id, deliveryModel);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,6 +43,12 @@ public class DBManager {
     }
 
     public void update(int id, DeliveryModel oldDelivery, DeliveryModel newDelivery) {
+        // If the new data is the same as the old data then there is no need to execute a query
+        if (oldDelivery.isEqualTo(newDelivery)) {
+            return;
+        }
+
+        // Update the old model with the new data (ignoring empty inputs)
         oldDelivery.setName(newDelivery.getName());
         oldDelivery.setAddress(newDelivery.getAddress());
         oldDelivery.setDate(newDelivery.getDate());
@@ -58,6 +65,24 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public HashMap<Integer, DeliveryModel> getAllActiveDeliveries() {
+        if (deliveries.isEmpty()) {
+            this.getAllDeliveriesFromDB();
+        }
+
+        // Iterate over all the existing deliveries and filter out all the ones that are in the past
+        HashMap<Integer, DeliveryModel> active = new HashMap<>(deliveries);
+
+        LocalTime currentTime = TimeConverter.getCurrentTimeWithDefaultFormat();
+
+        active.entrySet().removeIf(deliveryItem -> {
+            LocalTime deliveryTime = TimeConverter.convertStringToTimeWithDefaultFormat(deliveryItem.getValue().getDate());
+            return deliveryTime.isBefore(currentTime);
+        });
+
+        return active;
     }
 
     private void getAllDeliveriesFromDB() {
@@ -78,48 +103,13 @@ public class DBManager {
         }
     }
 
-    public HashMap<Integer, DeliveryModel> getAllActiveDeliveries() {
-        if (deliveries.isEmpty()) {
-            this.getAllDeliveriesFromDB();
-        }
-        HashMap<Integer, DeliveryModel> active = new HashMap<>(deliveries);
-
-        LocalTime currentTime = TimeConverter.getCurrentTimeWithDefaultFormat();
-        active.entrySet().removeIf(deliveryItem -> {
-            LocalTime deliveryTime = TimeConverter.convertStringToTimeWithDefaultFormat(deliveryItem.getValue().getDate());
-            return deliveryTime.isBefore(currentTime);
-        });
-
-        return active;
-    }
-
-    public List<DeliveryModel> getAllActiveDeliveriesList() {
-        // TODO: maybe convert to a member? so the function won't have to calculate every single time
-        List<DeliveryModel> activeDeliveries = new ArrayList<>();
-
+    public void close() {
         try {
-            // Extract all the deliveries from the db
-            Statement statement = this.connection.createStatement();
-            String query = "SELECT * from deliveries";
-            ResultSet resultSet = statement.executeQuery(query);
-
-            LocalTime currentTime = TimeConverter.getCurrentTimeWithDefaultFormat();
-
-            while (resultSet.next()) {
-                // Create a delivery model object based on the data value in the db
-                String id = resultSet.getString("id");
-                String delivery = resultSet.getString("data");
-                DeliveryModel deliveryModel = new DeliveryModel(delivery);
-
-                // Check if the delivery's time value is after the current time. If yes then add it to the list
-                LocalTime deliveryTime = TimeConverter.convertStringToTimeWithDefaultFormat(deliveryModel.getDate());
-                if (deliveryTime.isAfter(currentTime)) {
-                    activeDeliveries.add(deliveryModel);
-                }
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return activeDeliveries;
     }
 }

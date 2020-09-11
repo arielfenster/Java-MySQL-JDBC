@@ -23,7 +23,6 @@ public class DeliveryModel {
 
     public DeliveryModel(String dataJson) {
         this.objectMapper = new ObjectMapper();
-        // TODO: maybe fix this?
         this.jsonString = dataJson;
         this.name = this.getValueFromJson(dataJson, "name");
         this.address = this.getValueFromJson(dataJson, "address");
@@ -69,10 +68,27 @@ public class DeliveryModel {
         String otherDate = other.getDate();
 
         boolean areNamesEqual;
+        if (otherName.isEmpty()) {
+            areNamesEqual = true;
+        } else {
+            areNamesEqual = this.name.compareTo(otherName) == 0;
+        }
 
-        return (this.name.compareTo(other.getName()) == 0) &&
-                (this.address.compareTo(other.getAddress()) == 0) &&
-                (this.date.compareTo(other.getDate()) == 0);
+        boolean areAddressesEqual;
+        if (otherAddress.isEmpty()) {
+            areAddressesEqual = true;
+        } else {
+            areAddressesEqual = this.address.compareTo(otherAddress) == 0;
+        }
+
+        boolean areDatesEqual;
+        if (otherDate.isEmpty()) {
+            areDatesEqual = true;
+        } else {
+            areDatesEqual = this.date.compareTo(otherDate) == 0;
+        }
+
+        return areNamesEqual && areAddressesEqual && areDatesEqual;
     }
 
     public String getName() {
@@ -88,16 +104,24 @@ public class DeliveryModel {
     }
 
     public void setName(String name) {
-        this.name = name.isEmpty() ? this.name : name;
+        if (!name.isEmpty()) {
+            this.name = name;
+            this.jsonString = null;
+        }
     }
 
     public void setAddress(String address) {
-        this.address = address.isEmpty() ? this.address : address;
+        if (!address.isEmpty()) {
+            this.address = address;
+            this.jsonString = null;
+        }
+
     }
 
     public void setDate(String date) {
-        this.date = date.isEmpty() ? this.date : date;
+        if (!date.isEmpty()) {
+            this.date = date;
+            this.jsonString = null;
+        }
     }
-
-
 }
