@@ -16,12 +16,17 @@ public class MySqlManager implements IDatabaseManager {
     }
 
     @Override
-    public void connect(String url, String username, String password) {
+    public boolean connect(String url, String username, String password) {
+        boolean isConnected;
+
         try {
             this.connection = DriverManager.getConnection(url, username, password);
+            isConnected = true;
         } catch (SQLException e) {
             e.printStackTrace();
+            isConnected = false;
         }
+        return isConnected;
     }
 
     @Override
@@ -101,6 +106,7 @@ public class MySqlManager implements IDatabaseManager {
 
                 deliveries.put(id, deliveryModel);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

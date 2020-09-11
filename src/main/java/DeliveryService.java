@@ -1,6 +1,6 @@
+import db.DeliveryModel;
 import db.IDatabaseManager;
 import db.MySqlManager;
-import db.DeliveryModel;
 import validation.AddressValidator;
 import validation.DateValidator;
 import validation.IValidator;
@@ -14,16 +14,9 @@ import java.util.Scanner;
 public class DeliveryService {
 
     private IDatabaseManager dbManager;
-//    private IValidator validator;
     private Scanner scanner;
 
-//    public DeliveryService(MySqlManager dbManager, IValidator validator) {
-//        this.dbManager = dbManager;
-//        this.validator = validator;
-//        this.scanner = new Scanner(System.in);
-//    }
-
-    public DeliveryService(MySqlManager dbManager) {
+    public DeliveryService(IDatabaseManager dbManager) {
         this.dbManager = dbManager;
         this.scanner = new Scanner(System.in);
     }
@@ -72,19 +65,6 @@ public class DeliveryService {
         dbManager.insert(deliveryModel);
     }
 
-    private Integer getUpdateDeliveryId(HashMap<Integer, DeliveryModel> activeDeliveries) {
-        // Get user's input of requested id
-        System.out.println("Enter the id of the delivery which you want to edit");
-        int id = Integer.parseInt(scanner.nextLine());
-
-        // Check that the user entered a valid id
-        if (!activeDeliveries.containsKey(id)) {
-            System.err.println("Invalid id. Need to enter an existing id\n");
-            return null;
-        }
-        return id;
-    }
-
     private void updateDelivery() {
         HashMap<Integer, DeliveryModel> activeDeliveries = dbManager.getAllActiveDeliveries();
 
@@ -108,6 +88,19 @@ public class DeliveryService {
         dbManager.update(id, currentDelivery, newDelivery);
     }
 
+    private Integer getUpdateDeliveryId(HashMap<Integer, DeliveryModel> activeDeliveries) {
+        // Get user's input of requested id
+        System.out.println("Enter the id of the delivery which you want to edit");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        // Check that the user entered a valid id
+        if (!activeDeliveries.containsKey(id)) {
+            System.err.println("Invalid id. Need to enter an existing id\n");
+            return null;
+        }
+        return id;
+    }
+
     private void viewActiveDeliveries() {
         HashMap<Integer, DeliveryModel> activeDeliveries = dbManager.getAllActiveDeliveries();
 
@@ -124,14 +117,20 @@ public class DeliveryService {
         System.out.println("4. Exit");
     }
 
-    public void run() {
+    private boolean connectToDB() {
         // Database connection data
         String url = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
         String username = "root";
         String password = "password";
 
         // Connect to database
-        dbManager.connect(url, username, password);
+        return dbManager.connect(url, username, password);
+    }
+
+    public void run() {
+        if (!connectToDB()) {
+            return;
+        }
 
         while (true) {
             displayOptions();
@@ -166,7 +165,6 @@ public class DeliveryService {
     }
 
     public static void main(String[] args) {
-//        DeliveryService deliveryService = new DeliveryService(new DBManager(), new MyValidator());
         DeliveryService deliveryService = new DeliveryService(new MySqlManager());
         deliveryService.run();
 

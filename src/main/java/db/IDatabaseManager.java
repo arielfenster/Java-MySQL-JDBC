@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public interface IDatabaseManager {
 
-    void connect(String url, String username, String password);
+    boolean connect(String url, String username, String password);
 
     void insert(DeliveryModel deliveryModel);
 
