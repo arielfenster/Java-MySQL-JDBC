@@ -6,15 +6,16 @@ import java.sql.*;
 import java.time.LocalTime;
 import java.util.HashMap;
 
-public class DBManager {
+public class MySqlManager implements IDatabaseManager {
 
     private Connection connection;
     private HashMap<Integer, DeliveryModel> deliveries;
 
-    public DBManager() {
+    public MySqlManager() {
         this.deliveries = new HashMap<>();
     }
 
+    @Override
     public void connect(String url, String username, String password) {
         try {
             this.connection = DriverManager.getConnection(url, username, password);
@@ -23,6 +24,7 @@ public class DBManager {
         }
     }
 
+    @Override
     public void insert(DeliveryModel deliveryModel) {
         try {
             // Create the query and execute it (and get the auto-generated id from the db)
@@ -42,6 +44,7 @@ public class DBManager {
         }
     }
 
+    @Override
     public void update(int id, DeliveryModel oldDelivery, DeliveryModel newDelivery) {
         // If the new data is the same as the old data then there is no need to execute a query
         if (oldDelivery.isEqualTo(newDelivery)) {
@@ -103,6 +106,7 @@ public class DBManager {
         }
     }
 
+    @Override
     public void close() {
         try {
             if (connection != null && !connection.isClosed()) {

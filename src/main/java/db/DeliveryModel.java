@@ -13,6 +13,10 @@ public class DeliveryModel {
     private String jsonString;
     private ObjectMapper objectMapper;
 
+    private final String KEY_NAME = "name";
+    private final String KEY_ADDRESS = "address";
+    private final String KEY_DATE = "date";
+
     public DeliveryModel(String name, String address, String date) {
         this.name = name.trim();
         this.address = address.trim();
@@ -24,9 +28,9 @@ public class DeliveryModel {
     public DeliveryModel(String dataJson) {
         this.objectMapper = new ObjectMapper();
         this.jsonString = dataJson;
-        this.name = this.getValueFromJson(dataJson, "name");
-        this.address = this.getValueFromJson(dataJson, "address");
-        this.date = this.getValueFromJson(dataJson, "date");
+        this.name = this.getValueFromJson(dataJson, KEY_NAME);
+        this.address = this.getValueFromJson(dataJson, KEY_ADDRESS);
+        this.date = this.getValueFromJson(dataJson, KEY_DATE);
     }
 
     public String getValueFromJson(String dataJson, String key) {
@@ -39,6 +43,7 @@ public class DeliveryModel {
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            value = null;
         }
         return value;
     }
@@ -50,9 +55,9 @@ public class DeliveryModel {
         }
         ObjectNode rootNode = objectMapper.createObjectNode();
 
-        rootNode.put("name", name);
-        rootNode.put("address", address);
-        rootNode.put("date", date);
+        rootNode.put(KEY_NAME, name);
+        rootNode.put(KEY_ADDRESS, address);
+        rootNode.put(KEY_DATE, date);
 
         try {
             jsonString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode);

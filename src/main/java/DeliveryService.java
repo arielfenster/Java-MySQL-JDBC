@@ -1,4 +1,5 @@
-import db.DBManager;
+import db.IDatabaseManager;
+import db.MySqlManager;
 import db.DeliveryModel;
 import validation.AddressValidator;
 import validation.DateValidator;
@@ -12,17 +13,17 @@ import java.util.Scanner;
 
 public class DeliveryService {
 
-    private DBManager dbManager;
-    private IValidator validator;
+    private IDatabaseManager dbManager;
+//    private IValidator validator;
     private Scanner scanner;
 
-    public DeliveryService(DBManager dbManager, IValidator validator) {
-        this.dbManager = dbManager;
-        this.validator = validator;
-        this.scanner = new Scanner(System.in);
-    }
+//    public DeliveryService(MySqlManager dbManager, IValidator validator) {
+//        this.dbManager = dbManager;
+//        this.validator = validator;
+//        this.scanner = new Scanner(System.in);
+//    }
 
-    public DeliveryService(DBManager dbManager) {
+    public DeliveryService(MySqlManager dbManager) {
         this.dbManager = dbManager;
         this.scanner = new Scanner(System.in);
     }
@@ -127,7 +128,7 @@ public class DeliveryService {
         // Database connection data
         String url = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
         String username = "root";
-        String password = "fenster1w2k";
+        String password = "password";
 
         // Connect to database
         dbManager.connect(url, username, password);
@@ -166,7 +167,7 @@ public class DeliveryService {
 
     public static void main(String[] args) {
 //        DeliveryService deliveryService = new DeliveryService(new DBManager(), new MyValidator());
-        DeliveryService deliveryService = new DeliveryService(new DBManager());
+        DeliveryService deliveryService = new DeliveryService(new MySqlManager());
         deliveryService.run();
 
         deliveryService.close();
