@@ -1,7 +1,6 @@
 import db.DBManager;
 import db.DeliveryModel;
-import validation.IValidator;
-import validation.MyValidator;
+import validation.*;
 
 import javax.xml.bind.ValidationException;
 import java.util.HashMap;
@@ -20,25 +19,36 @@ public class DeliveryService {
         this.scanner = new Scanner(System.in);
     }
 
-    private void insertDelivery() {
+    public DeliveryService(DBManager dbManager) {
+        this.dbManager = dbManager;
+        this.scanner = new Scanner(System.in);
+    }
+
+    private String receiveInput(String msg, IValidator validator) {
+        String data = null;
+        System.out.println(msg);
+
         try {
-            System.out.println("Enter recipient name");
-            String name = scanner.nextLine();
-            validator.validateName(name);
-
-            System.out.println("Enter delivery address");
-            String address = scanner.nextLine();
-            validator.validateAddress(address);
-
-            System.out.println("Enter delivery hour");
-            String hour = scanner.nextLine();
-            validator.validateDate(hour);
-
-            DeliveryModel deliveryModel = new DeliveryModel(name, address, hour);
-            dbManager.insert(deliveryModel);
+            data = scanner.nextLine();
+            validator.validate(data);
         } catch (ValidationException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
+        return data;
+    }
+
+    private void insertDelivery() {
+        String name = receiveInput("Enter recipient name", new DateValidator(true));
+        if (name == null) return;
+
+        String address = receiveInput("Enter delivery address", new AddressValidator(true));
+        if (address == null) return;
+
+        String hour = receiveInput("Enter delivery hour", new DateValidator(true));
+        if (hour == null) return;
+
+        DeliveryModel deliveryModel = new DeliveryModel(name, address, hour);
+        dbManager.insert(deliveryModel);
     }
 
     private void updateDelivery() {
@@ -65,26 +75,26 @@ public class DeliveryService {
             System.out.println(String.format("Enter recipient name (%s): ", currentDelivery.getName()));
             String newName = scanner.nextLine();
             if (!newName.isEmpty()) {
-                validator.validateName(newName);
+//                validator.validateName(newName);
             }
 
             System.out.println(String.format("Enter delivery address (%s): ", currentDelivery.getAddress()));
             String newAddress = scanner.nextLine();
             if (!newAddress.isEmpty()) {
-                validator.validateAddress(newAddress);
+//                validator.validateAddress(newAddress);
             }
 
             System.out.println(String.format("Enter delivery hour (%s): ", currentDelivery.getDate()));
             String newDate = scanner.nextLine();
             if (!newDate.isEmpty()) {
-                validator.validateDate(newDate);
+//                validator.validateDate(newDate);
             }
 
             DeliveryModel newDelivery = new DeliveryModel(newName, newAddress, newDate);
             dbManager.update(id, currentDelivery, newDelivery);
 
         } catch (ValidationException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -109,7 +119,7 @@ public class DeliveryService {
         // Database connection data
         String url = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
         String username = "root";
-        String password = "password";
+        String password = "fenster1w2k";
 
         // Connect to database
         dbManager.connect(url, username, password);
@@ -144,7 +154,8 @@ public class DeliveryService {
     }
 
     public static void main(String[] args) {
-        DeliveryService deliveryService = new DeliveryService(new DBManager(), new MyValidator());
+//        DeliveryService deliveryService = new DeliveryService(new DBManager(), new MyValidator());
+        DeliveryService deliveryService = new DeliveryService(new DBManager());
         deliveryService.run();
 
         deliveryService.close();
