@@ -9,22 +9,22 @@ import java.util.regex.Pattern;
 
 public class DateValidator implements IValidator {
 
-    private boolean isInsertOperation;
+    private Operation operation;
 
-    public DateValidator(boolean isInsertOperation) {
-        this.isInsertOperation = isInsertOperation;
+    public DateValidator(Operation operation){
+        this.operation = operation;
     }
 
     @Override
     public void validate(String date) throws ValidationException {
-        if (isInsertOperation) {
-            validateAdd(date);
+        if (operation == Operation.INSERT) {
+            validateInsert(date);
         } else {
             validateUpdate(date);
         }
     }
 
-    private void validateAdd(String date) throws ValidationException {
+    private void validateInsert(String date) throws ValidationException {
         // Check the input's format
         Pattern pattern = Pattern.compile("\\d\\d:\\d\\d");
         Matcher matcher = pattern.matcher(date);
@@ -45,6 +45,6 @@ public class DateValidator implements IValidator {
         if (date.isEmpty()) {
             return;
         }
-        validateAdd(date);
+        validateInsert(date);
     }
 }

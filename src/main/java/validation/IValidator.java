@@ -10,5 +10,10 @@ public interface IValidator {
 //
 //    void validateDate(String date) throws ValidationException;
 
+    enum Operation {
+        INSERT,
+        UPDATE
+    }
+
     void validate(String data) throws ValidationException;
 }

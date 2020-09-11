@@ -4,22 +4,22 @@ import javax.xml.bind.ValidationException;
 
 public class AddressValidator implements IValidator {
 
-    private boolean isInsertOperation;
+    private Operation operation;
 
-    public AddressValidator(boolean isInsertOperation) {
-        this.isInsertOperation = isInsertOperation;
+    public AddressValidator(Operation operation) {
+        this.operation = operation;
     }
 
     @Override
     public void validate(String address) throws ValidationException {
-        if (isInsertOperation) {
-            validateAdd(address);
+        if (operation == Operation.INSERT) {
+            validateInsert(address);
         } else {
             validateUpdate(address);
         }
     }
 
-    private void validateAdd(String address) throws ValidationException {
+    private void validateInsert(String address) throws ValidationException {
         if (address.split(" ").length < 2) {
             throw new ValidationException("Invalid address. Address should contain at least 2 words");
         }
@@ -29,6 +29,6 @@ public class AddressValidator implements IValidator {
         if (address.isEmpty()) {
             return;
         }
-        validateAdd(address);
+        validateInsert(address);
     }
 }
