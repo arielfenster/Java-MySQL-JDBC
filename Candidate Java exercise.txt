@@ -17,10 +17,11 @@ Create a console application for managing delivery service.
    3. Enter delivery hour - validate time format (hh:mm), make sure time is the future [x]
    4. Insert a new row to the table and preset the main options again [x]
 4. When user chooses option 2 - 
-   1. Present all future deliveries in the system and ask the user to click the id of the row he wants to edit [ ]
-   2. For each field show the current value with an option to click enter to keep the old value or enter a new value, for example, Enter recipient name (OLD_VALUE): [ ]
+   1. Present all future deliveries in the system and ask the user to click the id of the row he wants to edit [x]
+   2. For each field show the current value with an option to click enter to keep the old value
+        or enter a new value, for example, Enter recipient name (OLD_VALUE): [x]
    3. If anything changed, update the row in DB [ ]
-   4. Show the main options again [ ]
+   4. Show the main options again [x]
 5. When user chooses option 3 -
    1. Show all future deliveries with a message at the end - “Click enter to continue” [x]
    2. When clicking enter - show the main options again [x]

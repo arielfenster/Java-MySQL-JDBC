@@ -1,7 +1,7 @@
 package validation;
 
 
-import utils.Helper;
+import utils.TimeConverter;
 
 import java.time.LocalTime;
 import java.util.regex.Matcher;
@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 public class MyValidator implements IValidator {
 
+    // TODO: change the exception to something else. or just try and catch. DONT CRASH THE PROGRAM!
     @Override
     public void validateName(String name) {
         if (name.length() < 3) {
@@ -34,8 +35,8 @@ public class MyValidator implements IValidator {
         }
 
         // Check that the input is in the future
-        LocalTime inputTime = Helper.convertStringToTimeWithDefaultFormat(date);
-        LocalTime currentTime = LocalTime.now();
+        LocalTime inputTime = TimeConverter.convertStringToTimeWithDefaultFormat(date);
+        LocalTime currentTime = TimeConverter.getCurrentTimeWithDefaultFormat();
 
         if (inputTime.isBefore(currentTime)) {
             throw new RuntimeException("Delivery time must be in the future");
