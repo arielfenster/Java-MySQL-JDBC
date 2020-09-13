@@ -35,22 +35,6 @@ public class DeliveryService {
         return data;
     }
 
-    /*
-    private DeliveryModel createDeliveryModel() {
-        String name = receiveInput("Enter recipient name", new NameValidator(IValidator.Operation.INSERT));
-        if (name == null) return null;
-
-        String address = receiveInput("Enter delivery address", new AddressValidator(IValidator.Operation.INSERT));
-        if (address == null) return null;
-
-        String hour = receiveInput("Enter delivery hour", new DateValidator(IValidator.Operation.INSERT));
-        if (hour == null) return null;
-
-        return new DeliveryModel(name, address, hour);
-    }
-
-     */
-
     private void insertDelivery() {
         String name = receiveInput("Enter recipient name", new NameValidator(IValidator.Operation.INSERT));
         if (name == null) return;
@@ -67,7 +51,10 @@ public class DeliveryService {
 
     private void updateDelivery() {
         HashMap<Integer, DeliveryModel> activeDeliveries = dbManager.getAllActiveDeliveries();
-
+        // If there aren't any deliveries in the db then return
+        if (activeDeliveries.isEmpty()) {
+            return;
+        }
         // Get the requested delivery's id
         Integer id = getUpdateDeliveryId(activeDeliveries);
         if (id == null) return;
@@ -104,6 +91,11 @@ public class DeliveryService {
     private void viewActiveDeliveries() {
         HashMap<Integer, DeliveryModel> activeDeliveries = dbManager.getAllActiveDeliveries();
 
+        if (activeDeliveries.isEmpty()) {
+            System.out.println("There are no entries in the database");
+            return;
+        }
+
         System.out.println("All active deliveries:");
         for (Map.Entry<Integer, DeliveryModel> entry : activeDeliveries.entrySet()) {
             System.out.println(String.format("ID: %d. Data: %s", entry.getKey(), entry.getValue().toString()));
@@ -121,7 +113,7 @@ public class DeliveryService {
         // Database connection data
         String url = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
         String username = "root";
-        String password = "password";
+        String password = "fenster1w2k";
 
         // Connect to database
         return dbManager.connect(url, username, password);
